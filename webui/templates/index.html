@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小智 MCP 连接器 - 控制面板</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="app-title">
+                    <span class="logo">🤖</span>
+                    小智 MCP
+                </h1>
+                <p class="app-subtitle">智能工具连接器</p>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span>控制面板</span>
+                </a>
+                <a href="#" class="nav-item" data-section="tools">
+                    <span class="nav-icon">🛠️</span>
+                    <span>工具管理</span>
+                </a>
+                <a href="#" class="nav-item" data-section="presets">
+                    <span class="nav-icon">⚙️</span>
+                    <span>预设配置</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span>系统运行中</span>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 头部 -->
+            <header class="content-header">
+                <div class="header-left">
+                    <h2 class="page-title" id="pageTitle">控制面板</h2>
+                </div>
+                <div class="header-right">
+                    <div class="theme-toggle" id="themeToggle">
+                        <span class="theme-icon">🌙</span>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- 控制面板 -->
+            <section class="section active" id="dashboard">
+                <div class="cards-grid">
+                    <div class="card stat-card">
+                        <div class="stat-icon">💻</div>
+                        <div class="stat-content">
+                            <h3>系统控制</h3>
+                            <p class="stat-number" id="systemToolsCount">20+</p>
+                            <p class="stat-label">可用工具</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card stat-card">
+                        <div class="stat-icon">🌐</div>
+                        <div class="stat-content">
+                            <h3>API 工具</h3>
+                            <p class="stat-number" id="apiToolsCount">25+</p>
+                            <p class="stat-label">开放接口</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card stat-card">
+                        <div class="stat-icon">📱</div>
+                        <div class="stat-content">
+                            <h3>自动化</h3>
+                            <p class="stat-number" id="autoToolsCount">10+</p>
+                            <p class="stat-label">智能操作</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 快速操作 -->
+                <div class="section-card">
+                    <h3 class="section-card-title">🚀 快速启动</h3>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="startMCP('basic')">
+                            <span class="btn-icon">▶️</span>
+                            启动基础版
+                        </button>
+                        <button class="btn btn-success" onclick="startMCP('openapi')">
+                            <span class="btn-icon">🌐</span>
+                            启动开放API版
+                        </button>
+                        <button class="btn btn-info" onclick="startMCP('alapi')">
+                            <span class="btn-icon">🔌</span>
+                            启动ALAPI版
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 最近使用 -->
+                <div class="section-card">
+                    <h3 class="section-card-title">📋 最近使用工具</h3>
+                    <div class="tools-list" id="recentTools">
+                        <div class="tool-item">
+                            <span class="tool-icon">🔢</span>
+                            <span class="tool-name">计算器</span>
+                            <span class="tool-tag">系统</span>
+                        </div>
+                        <div class="tool-item">
+                            <span class="tool-icon">🌍</span>
+                            <span class="tool-name">在电脑上打开URL网址</span>
+                            <span class="tool-tag">系统</span>
+                        </div>
+                        <div class="tool-item">
+                            <span class="tool-icon">💬</span>
+                            <span class="tool-name">获取心灵毒鸡汤</span>
+                            <span class="tool-tag">API</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 工具管理 -->
+            <section class="section" id="tools">
+                <div class="tools-container">
+                    <div class="tools-sidebar">
+                        <button class="tool-category-btn active" data-category="all">
+                            全部工具
+                        </button>
+                        <button class="tool-category-btn" data-category="system">
+                            🖥️ 系统控制
+                        </button>
+                        <button class="tool-category-btn" data-category="wechat">
+                            💬 微信自动化
+                        </button>
+                        <button class="tool-category-btn" data-category="api">
+                            🌐 API 工具
+                        </button>
+                        <button class="tool-category-btn" data-category="control">
+                            🎮 第三方控制
+                        </button>
+                        <button class="tool-category-btn" data-category="music">
+                            🎵 音乐控制
+                        </button>
+                    </div>
+                    
+                    <div class="tools-content">
+                        <div class="tools-search">
+                            <input type="text" id="toolSearch" placeholder="搜索工具..." class="search-input">
+                        </div>
+                        <div class="tools-grid" id="toolsGrid">
+                            <!-- 工具卡片将通过JS动态生成 -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 预设配置 -->
+            <section class="section" id="presets">
+                <div class="presets-container">
+                    <div class="presets-section">
+                        <div class="presets-header">
+                            <h3>📁 程序预设</h3>
+                            <button class="btn btn-small btn-primary" onclick="addProgramPreset()">
+                                + 添加
+                            </button>
+                        </div>
+                        <div class="presets-list" id="programPresets">
+                            <!-- 程序预设将通过JS动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <div class="presets-section">
+                        <div class="presets-header">
+                            <h3>⌨️ 命令预设</h3>
+                            <button class="btn btn-small btn-primary" onclick="addCommandPreset()">
+                                + 添加
+                            </button>
+                        </div>
+                        <div class="presets-list" id="commandPresets">
+                            <!-- 命令预设将通过JS动态生成 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="presets-actions">
+                    <button class="btn btn-success" onclick="savePresets()">
+                        💾 保存预设
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- 通知提示 -->
+    <div class="notification" id="notification">
+        <div class="notification-content">
+            <span class="notification-icon" id="notificationIcon">✅</span>
+            <span class="notification-text" id="notificationText">操作成功</span>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
